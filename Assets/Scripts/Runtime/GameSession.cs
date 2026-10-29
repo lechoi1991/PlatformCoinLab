@@ -14,6 +14,11 @@ public sealed class GameSession : MonoBehaviour
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private UnityEngine.UI.Button startButton;
 
+    [SerializeField] private TMP_Text bestText;
+
+    private const string BestKey = "PlatformCoinLab.Best";
+    private int best;
+
     private AudioClip generatedCollectClip;
     private CoinRound round;
     private Vector3 startPosition;
@@ -32,6 +37,8 @@ public sealed class GameSession : MonoBehaviour
 
     private void Awake()
     {
+        // 저장한 최고 점수가 없으면 기본값 0으로 시작합니다.
+        best = PlayerPrefs.GetInt(BestKey, 0);
         round = new CoinRound(roundSeconds);
         startPosition = player.position;
 
@@ -172,6 +179,26 @@ public sealed class GameSession : MonoBehaviour
     {
         playing = false;
         showingResult = true;
+        SaveBest();
+    }
+
+    public void SaveBest()
+    {
+        // 기존 최고 점수와 이번 점수 중 큰 값만 남겨 기록이 낮아지지 않게 합니다.
+        best = Mathf.Max(best, Score);
+        PlayerPrefs.SetInt(BestKey, best);
+        // 메모리에서 바꾼 저장 값을 실제 저장소에 반영합니다.
+        PlayerPrefs.Save();
+    }
+
+    private void OnApplicationPause(bool value)
+    {
+        // 중단이면 true, 복귀이면 false입니다. 같은 값을 이동·시간 처리의 잠금에도 사용합니다.
+        paused = value;
+        if (value)
+        {
+            SaveBest();
+        }
     }
 
     private void RefreshUi()
@@ -183,5 +210,6 @@ public sealed class GameSession : MonoBehaviour
         // 0.2초가 남았을 때 0으로 보이지 않도록 올림해서 1초로 표시합니다.
         hud.text = $"Score: {Score}  Time: {Mathf.CeilToInt(round.Remaining)}";
         resultText.text = $"Score: {Score}";
+        bestText.text = $"Best: {best}";
     }
 }
