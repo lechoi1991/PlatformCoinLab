@@ -15,25 +15,26 @@ MonoBehaviour:
   m_DefaultGroup: 905c67299389dcf42a04b7830fac78fe
   m_currentHash:
     serializedVersion: 2
-    Hash: 9b43f317e4cb62825411ac44b80a475f
+    Hash: 9b3dab9184f8b98fd0488d7b5f587d35
   m_ExtractTypeTreeData: 0
   m_DisableWriteTypeTree: 0
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
+  m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
   m_InternalIdNamingMode: 0
   m_InternalBundleIdMode: 1
   m_AssetLoadMode: 0
   m_BundledAssetProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider
   m_AssetBundleProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
-  m_EnableJsonCatalog: 0
+  m_EnableJsonCatalog: 1
   m_NonRecursiveBuilding: 1
   m_AllowNestedBundleFolders: 0
   m_CCDEnabled: 0
@@ -54,13 +55,13 @@ MonoBehaviour:
   m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 
+    m_Id: b307dae984453454faaedeb5dbbb769e
   m_RemoteCatalogLoadPath:
-    m_Id: 
-  m_ContentStateBuildPathProfileVariableName: 
+    m_Id: 1e1f50325d027b443a882e652929a29a
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 0
+  m_BuildAddressablesWithPlayerBuild: 2
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: 12793d75309d7ae409cc2c2705b475e2, type: 2}
@@ -83,6 +84,20 @@ MonoBehaviour:
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: ff9908ecad6ecbb48975f9f6895b18e1
         m_Value: 'ServerData/[BuildTarget]'
+    - m_InheritedParent: 
+      m_Id: 663ced4aa479fc34085568d3b07c9179
+      m_ProfileName: RemotePractice
+      m_Values:
+      - m_Id: 1e1f50325d027b443a882e652929a29a
+        m_Value: 'https://localhost:5443/[BuildTarget]'
+      - m_Id: 3f92bc9f24f4ca046b91c9d86dda0cc2
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 6f5b55db54f7021498edc71084a932e7
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: b307dae984453454faaedeb5dbbb769e
+        m_Value: 'ServerData/[BuildTarget]'
+      - m_Id: ff9908ecad6ecbb48975f9f6895b18e1
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
     m_ProfileEntryNames:
     - m_Id: 1e1f50325d027b443a882e652929a29a
       m_Name: Local.LoadPath
