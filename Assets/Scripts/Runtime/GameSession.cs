@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Unity.Profiling;
 
 public sealed class GameSession : MonoBehaviour
 {
@@ -34,6 +35,16 @@ public sealed class GameSession : MonoBehaviour
     public bool IsLoading => busy;
     // &&는 왼쪽부터 확인하므로 coins가 null이면 Length에 접근하지 않습니다.
     public bool IsReady => coins != null && coins.Length > 0 && !busy;
+
+    private static readonly ProfilerMarker UiMarker = new ProfilerMarker("CoinLab.PresentUi");
+
+    // 처음 표시할 0점과 구분하려고 -1로 시작합니다. 첫 RefreshUi에서는 반드시 갱신됩니다.
+    private int shownScore = -1;
+    private int shownSeconds = -1;
+    private int shownBest = -1;
+    private bool shownPlaying;
+    private bool shownResult;
+    private bool shownReady;
 
     private void Awake()
     {
@@ -203,13 +214,37 @@ public sealed class GameSession : MonoBehaviour
 
     private void RefreshUi()
     {
-        menuPanel.SetActive(!playing && !showingResult);
-        hudPanel.SetActive(playing);
-        resultPanel.SetActive(showingResult);
-        startButton.interactable = IsReady;
-        // 0.2초가 남았을 때 0으로 보이지 않도록 올림해서 1초로 표시합니다.
-        hud.text = $"Score: {Score}  Time: {Mathf.CeilToInt(round.Remaining)}";
-        resultText.text = $"Score: {Score}";
-        bestText.text = $"Best: {best}";
+        // using 블록을 벗어날 때 측정 구간이 끝납니다. 중간에 return해도 측정이 종료됩니다.
+        using (UiMarker.Auto())
+        {
+            // 실제 남은 시간 대신 화면에 보이는 올림한 초를 비교하므로, 매 프레임 타이머 문자열을 만들지 않습니다.
+            int seconds = Mathf.CeilToInt(round.Remaining);
+            bool ready = IsReady;
+            // 점수·시간뿐 아니라 화면 상태와 시작 가능 여부까지 모두 같을 때만 갱신을 건너뜁니다.
+            if (shownScore == Score
+                && shownSeconds == seconds
+                && shownBest == best
+                && shownPlaying == playing
+                && shownResult == showingResult
+                && shownReady == ready)
+            {
+                return;
+            }
+
+            // 이번에 표시할 값을 기억해 두고 다음 호출에서 비교합니다.
+            shownScore = Score;
+            shownSeconds = seconds;
+            shownBest = best;
+            shownPlaying = playing;
+            shownResult = showingResult;
+            shownReady = ready;
+            menuPanel.SetActive(!playing && !showingResult);
+            hudPanel.SetActive(playing);
+            resultPanel.SetActive(showingResult);
+            startButton.interactable = ready;
+            hud.text = $"Score: {Score}  Time: {seconds}";
+            resultText.text = $"Score: {Score}";
+            bestText.text = $"Best: {best}";
+        }
     }
 }
