@@ -73,3 +73,11 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# ContentServer: 서버 프로젝트 파일은 포함하고 빌드 출력은 제외합니다.
+!/ContentServer/ContentServer.csproj
+/ContentServer/bin/
+/ContentServer/obj/
+
+# 제출 패키지 출력
+/SubmissionPackage/

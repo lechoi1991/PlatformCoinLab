@@ -32,6 +32,8 @@ namespace ContentServer
             types.Mappings.Clear();
             // application은 프로그램이 처리할 데이터, octet-stream은 8비트 단위로 이어진 일반 바이너리 데이터를 뜻합니다.
             types.Mappings[".bundle"] = "application/octet-stream";
+            // Addressables 2.x 원격 카탈로그(catalog_*.bin)도 제공해야 원격 번들을 찾을 수 있습니다.
+            types.Mappings[".bin"] = "application/octet-stream";
             types.Mappings[".hash"] = "text/plain";
             types.Mappings[".json"] = "application/json";
             types.Mappings[".html"] = "text/html";

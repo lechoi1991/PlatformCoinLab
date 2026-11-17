@@ -22,23 +22,23 @@ public sealed class StageLoader : MonoBehaviour
             return;
         }
 
-        // ¿äÃ»À» ½ÃÀÛÇÏ±â Àü¿¡ Start¿Í Áßº¹ ·Îµå¸¦ Àá±×°í ÀÌÀü ÄÚÀÎ ÂüÁ¶¸¦ ºñ¿ó´Ï´Ù.
+        // ìš”ì²­ì„ ì‹œì‘í•˜ê¸° ì „ì— Startì™€ ì¤‘ë³µ ë¡œë“œë¥¼ ì ê·¸ê³  ì´ì „ ì½”ì¸ ì°¸ì¡°ë¥¼ ë¹„ì›ë‹ˆë‹¤.
         session.SetBusy(true);
         session.SetStatus("Loading stage...");
         session.SetStage(null);
 
-        // ÀÌÀü ½ºÅ×ÀÌÁö¿Í ¿äÃ» ÂüÁ¶¸¦ ¹İ³³ÇÑ µÚ »õ ÇÚµéÀ» ÀúÀåÇÕ´Ï´Ù.
+        // ì´ì „ ìŠ¤í…Œì´ì§€ì™€ ìš”ì²­ ì°¸ì¡°ë¥¼ ë°˜ë‚©í•œ ë’¤ ìƒˆ í•¸ë“¤ì„ ì €ì¥í•©ë‹ˆë‹¤.
         ReleaseOwnedOperation();
 
-        // ÇÁ¸®ÆÕÀ» ¿øÁ¡¡¤±âº» È¸ÀüÀ¸·Î »ı¼º ¿äÃ»ÇÏ°í, ¿Ï·á Ã³¸®´Â ¾Æ·¡ Äİ¹é¿¡ ¸Ã±é´Ï´Ù.
+        // í”„ë¦¬íŒ¹ì„ ì›ì Â·ê¸°ë³¸ íšŒì „ìœ¼ë¡œ ìƒì„± ìš”ì²­í•˜ê³ , ì™„ë£Œ ì²˜ë¦¬ëŠ” ì•„ë˜ ì½œë°±ì— ë§¡ê¹ë‹ˆë‹¤.
         handle = Addressables.InstantiateAsync(address, Vector3.zero, Quaternion.identity);
-        // ¼º°ø°ú ½ÇÆĞ ¸ğµÎ ¿Ï·á Äİ¹é¿¡¼­ È®ÀÎÇÕ´Ï´Ù.
+        // ì„±ê³µê³¼ ì‹¤íŒ¨ ëª¨ë‘ ì™„ë£Œ ì½œë°±ì—ì„œ í™•ì¸í•©ë‹ˆë‹¤.
         handle.Completed += OnCompleted;
     }
 
     private void OnCompleted(AsyncOperationHandle<GameObject> operation)
     {
-        // ¿äÃ»ÇÑ ¿ÀºêÁ§Æ®°¡ ¸ÕÀú ÆÄ±«µÇ¾ú´Ù¸é, µµÂøÇÑ °á°ú´Â ¾À¿¡ ¿¬°áÇÏÁö ¾Ê°í ÇØÁ¦ÇÕ´Ï´Ù.
+        // ìš”ì²­í•œ ì˜¤ë¸Œì íŠ¸ê°€ ë¨¼ì € íŒŒê´´ë˜ì—ˆë‹¤ë©´, ë„ì°©í•œ ê²°ê³¼ëŠ” ì”¬ì— ì—°ê²°í•˜ì§€ ì•Šê³  í•´ì œí•©ë‹ˆë‹¤.
         if (ownerDestroyed)
         {
             ReleaseOwnedOperation();
@@ -54,7 +54,7 @@ public sealed class StageLoader : MonoBehaviour
             return;
         }
 
-        // true¸¦ ÁÖ¾î ºñÈ°¼º ÄÚÀÎ±îÁö Æ÷ÇÔÇÕ´Ï´Ù. ·Îµå ¼º°ø ÈÄ¿¡¸¸ Result¿¡ Á¢±ÙÇÕ´Ï´Ù.
+        // trueë¥¼ ì£¼ì–´ ë¹„í™œì„± ì½”ì¸ê¹Œì§€ í¬í•¨í•©ë‹ˆë‹¤. ë¡œë“œ ì„±ê³µ í›„ì—ë§Œ Resultì— ì ‘ê·¼í•©ë‹ˆë‹¤.
         CoinPickup[] coins = operation.Result.GetComponentsInChildren<CoinPickup>(true);
         if (coins.Length == 0)
         {
@@ -73,8 +73,8 @@ public sealed class StageLoader : MonoBehaviour
     {
         ownerDestroyed = true;
 
-        // ÁøÇà ÁßÀÎ ¿äÃ»Àº ¿©±â¼­ Ãë¼ÒµÇÁö ¾Ê½À´Ï´Ù. ¿Ï·áµÈ ¿äÃ»¸¸ Áö±İ Á¤¸®ÇÏ°í,
-        // ¾ÆÁ÷ ÁøÇà ÁßÀÌ¸é À§ OnCompletedÀÇ ownerDestroyed ºĞ±â¿¡¼­ ³ªÁß¿¡ Á¤¸®ÇÕ´Ï´Ù.
+        // ì§„í–‰ ì¤‘ì¸ ìš”ì²­ì€ ì—¬ê¸°ì„œ ì·¨ì†Œë˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ì™„ë£Œëœ ìš”ì²­ë§Œ ì§€ê¸ˆ ì •ë¦¬í•˜ê³ ,
+        // ì•„ì§ ì§„í–‰ ì¤‘ì´ë©´ ìœ„ OnCompletedì˜ ownerDestroyed ë¶„ê¸°ì—ì„œ ë‚˜ì¤‘ì— ì •ë¦¬í•©ë‹ˆë‹¤.
         if (handle.IsValid() && handle.IsDone)
         {
             ReleaseOwnedOperation();
@@ -90,16 +90,16 @@ public sealed class StageLoader : MonoBehaviour
 
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            // ¼º°øÇÑ InstantiateAsync ¿äÃ»Àº »ı¼ºµÈ ÀÎ½ºÅÏ½º¿Í ÂüÁ¶¸¦ ÇÔ²² ÇØÁ¦ÇÕ´Ï´Ù.
+            // ì„±ê³µí•œ InstantiateAsync ìš”ì²­ì€ ìƒì„±ëœ ì¸ìŠ¤í„´ìŠ¤ì™€ ì°¸ì¡°ë¥¼ í•¨ê»˜ í•´ì œí•©ë‹ˆë‹¤.
             Addressables.ReleaseInstance(handle);
         }
         else
         {
-            // ½ÇÆĞÇÑ ¿äÃ»Àº ÀÎ½ºÅÏ½º°¡ ¾øÁö¸¸, ¿äÃ» ÇÚµéÀÌ °¡Áø ÂüÁ¶´Â ¹İ³³ÇØ¾ß ÇÕ´Ï´Ù.
+            // ì‹¤íŒ¨í•œ ìš”ì²­ì€ ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ì§€ë§Œ, ìš”ì²­ í•¸ë“¤ì´ ê°€ì§„ ì°¸ì¡°ëŠ” ë°˜ë‚©í•´ì•¼ í•©ë‹ˆë‹¤.
             Addressables.Release(handle);
         }
 
-        // Á¤¸®ÇÑ ÇÚµéÀ» ºñ¿ö ÀÌÈÄ È£Ãâ¿¡¼­ ´Ù½Ã ÇØÁ¦ÇÏÁö ¾Ê°Ô ÇÕ´Ï´Ù.
+        // ì •ë¦¬í•œ í•¸ë“¤ì„ ë¹„ì›Œ ì´í›„ í˜¸ì¶œì—ì„œ ë‹¤ì‹œ í•´ì œí•˜ì§€ ì•Šê²Œ í•©ë‹ˆë‹¤.
         handle = default;
     }
 }
