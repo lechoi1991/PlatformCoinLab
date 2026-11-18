@@ -1,8 +1,5 @@
 # PlatformCoinLab — 게임플랫폼 포트폴리오
 
-> 표기 규칙 — **[수업]** 수업에서 따라 구현 · **[외부]** 외부 자료·도구 활용 · **[추가]** 직접 추가·개선
-> 이미지는 `Submission/Evidence/` 폴더의 파일을 링크한다. 파일명은 [Submission/Evidence/README.md](Submission/Evidence/README.md)를 따른다.
-
 ---
 
 ## 1. 프로젝트 소개
